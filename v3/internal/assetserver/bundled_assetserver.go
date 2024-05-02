@@ -1,10 +1,11 @@
 package assetserver
 
 import (
-	"github.com/wailsapp/wails/v3/internal/assetserver/bundledassets"
 	"io/fs"
 	"net/http"
 	"strings"
+
+	"github.com/wailsapp/wails/v3/internal/assetserver/bundledassets"
 )
 
 type BundledAssetServer struct {
@@ -25,6 +26,14 @@ func (b *BundledAssetServer) ServeHTTP(rw http.ResponseWriter, req *http.Request
 		case "/runtime.js":
 			rw.Header().Set("Content-Type", "application/javascript")
 			rw.Write([]byte(bundledassets.RuntimeJS))
+			return
+		case "/importmap.js":
+			rw.Header().Set("Content-Type", "application/javascript")
+			rw.Write([]byte(bundledassets.ImportmapJS))
+			return
+		case "/es-module-shims.js":
+			rw.Header().Set("Content-Type", "application/javascript")
+			rw.Write([]byte(bundledassets.ESModuleShims))
 			return
 		}
 		return
